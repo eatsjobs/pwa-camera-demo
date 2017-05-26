@@ -1,0 +1,21 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": { "browsers": ["> 1%"] },        
+        "useBuiltIns": true,
+        "debug": true,
+        "modules": false
+      }
+    ],
+    "react"
+  ],
+   "plugins": [
+      ["transform-object-rest-spread",
+        {
+          "useBuiltIns": true
+        }
+      ]
+    ]
+}
