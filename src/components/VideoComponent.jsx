@@ -6,17 +6,26 @@ export class VideoComponent extends Component {
         super(props);
         this.handleStream = this.handleStream.bind(this);
         this.handleError = this.handleError.bind(this);
-        this.takePhoto = this.takePhoto.bind(this);        
+        this.takePhoto = this.takePhoto.bind(this);
+        this.stopStream = this.stopStream.bind(this);
+        this.startStream = this.startStream.bind(this);
+        this.toggleStream = this.toggleStream.bind(this);
+        this.state = {
+            stream: null,
+        }
     }
 
     handleStream(stream) {
         console.log("handle stream", stream);
-        this.refs.videoElement.src = window.URL.createObjectURL(stream);        
+        this.setState({...this.state, 
+            objUrl: window.URL.createObjectURL(stream),
+            stream
+        });
         this.refs.videoElement.onloadedmetadata = (e) => this.refs.videoElement.play();
     }
 
     handleError(err) {
-        console.log("handle error");
+        console.log("handle error", err);
     }
 
     takePhoto() {
@@ -31,15 +40,50 @@ export class VideoComponent extends Component {
         this.props.onPhotoTaken(dataPhoto);
     }
 
-    componentDidMount(){
-        
-        const constraints = { audio: false, video: { width: 1280, height: 720, frameRate: { ideal: 10, max: 15 } } }; 
-        navigator.mediaDevices.getUserMedia(constraints)
+    toggleStream() {
+        this.state.stream ? this.stopStream() : this.startStream();
+    }
+
+    stopStream() {
+        window.URL.revokeObjectURL(this.state.objUrl);
+        this.state.stream.getTracks().map(track => track.stop());
+        this.setState({...this.state, stream: null });
+    }
+
+    startStream() {
+        navigator.mediaDevices.getUserMedia(this.props.constraints)
         .then(this.handleStream).catch(this.handleError);
     }
 
+    componentDidMount() {
+        if(this.props.autoStart) {
+            this.startStream();
+        }
+    }
+
+    componentWillUnmount() {
+        this.stopStream();
+    }
+
     render(){
-        return (<video ref="videoElement" style={{width:'100%'}} onClick={this.takePhoto}></video>)
+        const btnStyle = { width: '100%', minHeight:'50px'}
+        return (
+            <div className='row'>
+                <div className='row'>
+                    <div className='col-xs-12'>
+                        <video ref="videoElement" style={{width: '100%'}} onClick={this.takePhoto} src={this.state.objUrl}></video>
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-xs-6'>
+                        <button type="button" style={btnStyle} onClick={this.takePhoto}>Take Screenshot</button>
+                    </div>
+                    <div className='col-xs-6'>
+                        <button type="button" style={btnStyle} onClick={this.toggleStream}>{this.state.stream ? 'Stop' : 'Start'}</button>
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
 

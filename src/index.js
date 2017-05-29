@@ -19,21 +19,31 @@ const containerStyle = {
 class App extends Component {
     constructor(props){
         super(props);
-        this.state = {data:[]};
+        this.state = {
+            constraints: { 
+                audio: false, 
+                video: { 
+                    width: 1280, 
+                    height: 720, 
+                    frameRate: { ideal: 10, max: 15 } 
+                } 
+            },
+            data:[]
+        };
         this.addScreenshot = this.addScreenshot.bind(this);
     }
 
     addScreenshot(screenshot){
         console.log("addScreenshot");
         const newData = [...this.state.data, screenshot]
-        this.setState({ data: newData });
+        this.setState({ ...this.state, data: newData });
     }
 
     render() {
         return (
-            <div style={containerStyle}>
+            <div className='container'>
                 <h1 style={{textAlign: 'center'}}>{this.props.title}</h1>
-                <VideoComponent onPhotoTaken={this.addScreenshot} />
+                <VideoComponent onPhotoTaken={this.addScreenshot} constraints={this.state.constraints} autoStart={true} />
                 <ScreenshotsList data={this.state.data} />
             </div>
         );

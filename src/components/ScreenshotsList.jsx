@@ -6,7 +6,7 @@ const style = {
     overflowX: 'scroll',
     overflowY: 'hidden',
     backgroundColor: 'lightgrey',
-    minHeight: '100px'
+    minHeight: '120px'
 };
 
 const thumbContainer = {
@@ -27,11 +27,13 @@ export class ScreenshotsList extends Component {
     render() {
         const computedStyle = this.calculateLength(thumbContainer);
         return (
-            <ul style={style}>
-                <div style={computedStyle}>
-                    {this.props.data.map((src) => <ScreenshotItem key={src.toString().length} src={src}/>)}
-                </div>                
-            </ul>
+            <div className='row'>
+                <ul style={style}>
+                    <div style={computedStyle}>
+                        {this.props.data.map((src) => <ScreenshotItem key={src.toString().length} src={src}/>)}
+                    </div>                
+                </ul>
+            </div>
         )
     }
 }
