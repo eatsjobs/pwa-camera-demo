@@ -52,4 +52,8 @@ class App extends Component {
     }
 }
 
+try {
+    screen.orientation.lock('landscape');
+} catch(e) {}
+
 render(<App title='Camera App' />, document.getElementById('root'));
