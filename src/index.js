@@ -44,8 +44,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className='container'>
-                <h1 style={{textAlign: 'center'}}>{this.props.title}</h1>
+            <div className='container'>                
                 <VideoComponent onPhotoTaken={this.addScreenshot} constraints={this.state.constraints} autoStart={true} />
                 <ScreenshotsList data={this.state.data} />
             </div>
