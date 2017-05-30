@@ -1,5 +1,7 @@
 import 'babel-polyfill';
 import './mediaDevices';
+import './swRegistration';
+
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
