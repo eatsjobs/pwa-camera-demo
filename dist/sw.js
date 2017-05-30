@@ -1,7 +1,7 @@
 var LOG_TAG = '[ServiceWorker]';
 var versionCache = 'v1';
 var cacheName = 'camera-app-cache-' + versionCache;
-var toCache = ['/', 'index.html', 'bundle.js', 'manifest.json']
+var toCache = ['index.html', 'bundle.js', 'manifest.json'];
 
 function onInstall(e){
     console.log(LOG_TAG, "Install");
