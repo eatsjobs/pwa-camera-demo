@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import './mediaDevices';
 import './swRegistration';
+import requestFullscreen from 'requestFullscreen';
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
@@ -53,6 +54,7 @@ class App extends Component {
 }
 
 try {
+    requestFullscreen(document.documentElement);
     screen.orientation.lock('landscape');
 } catch(e) {}
 
