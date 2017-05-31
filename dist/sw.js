@@ -1,5 +1,5 @@
 var LOG_TAG = '[ServiceWorker]';
-var versionCache = 'v1';
+var versionCache = 'v2';
 var cacheName = 'camera-app-cache-' + versionCache;
 var toCache = ['index.html', 'bundle.js', 'manifest.json'];
 
@@ -17,7 +17,14 @@ function onInstall(e){
 }
 
 function onActivate(e){
-    console.log(LOG_TAG, "Activate");
+    event.waitUntil(caches.keys().then(function(cacheNames){
+        var deleteTask = cacheNames.map(function(storedCacheName){
+            if (storedCacheName !== cacheName) {
+                return caches.delete(cacheName)
+            }
+        });
+        return Promise.all(deleteTask);
+    }));
 }
 
 
