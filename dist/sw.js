@@ -1,7 +1,7 @@
 var LOG_TAG = '[ServiceWorker]';
-var versionCache = 'v2';
+var versionCache = 'v3';
 var cacheName = 'camera-app-cache-' + versionCache;
-var toCache = ['index.html', 'bundle.js', 'manifest.json'];
+var toCache = ['index.html', 'bundle.js', 'manifest.json', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'];
 
 function onInstall(e){
     console.log(LOG_TAG, "Install");
@@ -17,7 +17,7 @@ function onInstall(e){
 }
 
 function onActivate(e){
-    event.waitUntil(caches.keys().then(function(cacheNames){
+    e.waitUntil(caches.keys().then(function(cacheNames){
         var deleteTask = cacheNames.map(function(storedCacheName){
             if (storedCacheName !== cacheName) {
                 return caches.delete(cacheName)

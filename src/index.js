@@ -6,10 +6,8 @@ import requestFullscreen from './requestFullscreen';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-import VideoComponent from './components/VideoComponent';
+import Camera from './components/Camera';
 import ScreenshotsList from './components/ScreenshotsList';
-
-import './images/icons/icon-192x192.png';
 
 if (module.hot) { module.hot.accept(); }
 
@@ -28,8 +26,9 @@ class App extends Component {
                 video: { 
                     width: 1280, 
                     height: 720, 
-                    frameRate: { ideal: 10, max: 15 } 
-                } 
+                    frameRate: { ideal: 10, max: 15 },
+                    facingMode: { exact: "environment" }
+                }
             },
             data:[]
         };
@@ -45,7 +44,7 @@ class App extends Component {
     render() {
         return (
             <div className='container'>                
-                <VideoComponent onPhotoTaken={this.addScreenshot} constraints={this.state.constraints} autoStart={true} />
+                <Camera onPhotoTaken={this.addScreenshot} autoStart={true} />
                 <ScreenshotsList data={this.state.data} />
             </div>
         );

@@ -1,13 +1,21 @@
 {
-  "name": "Camera DEMO H5",
-  "short_name": "Camera H5",
-  "icons": [{
-    "src": "assets/icon-192x192.png",
+  "orientation": "portrait",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icon_192x192.png",
       "sizes": "192x192",
       "type": "image/png"
-    }],
+    },
+    {
+      "src": "icon_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "name": "Camera DEMO H5",
+  "short_name": "Camera H5",
   "start_url": "index.html",
-  "display": "standalone",
   "background_color": "#3E4EB8",
   "theme_color": "#2F3BA2"
 }

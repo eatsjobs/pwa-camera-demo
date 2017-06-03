@@ -1,4 +1,5 @@
 var path = require('path');
+var ManifestPlugin = require('pwa-manifest-webpack-plugin');
 
 var devConfiguration = {
   entry: [
@@ -35,7 +36,20 @@ var devConfiguration = {
         },
       ],
   },
-  plugins: [],
+  plugins: [
+    new ManifestPlugin({
+      name: "Camera DEMO H5",
+      short_name: "Camera H5",
+        icon: {
+          src: path.resolve('src/images/icons/icon-512x512.png'),
+          sizes: [192, 512]
+      },
+      start_url: "index.html",
+      display: "standalone",
+      background_color: "#3E4EB8",
+      theme_color: "#2F3BA2"
+    })
+  ],
     // module end
   resolve: {
     extensions: ['.js', '.es6', '.jsx'],
