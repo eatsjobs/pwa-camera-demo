@@ -116,7 +116,7 @@ export class Camera extends Component {
                         <button type="button" style={btnStyle} onClick={this.toggleStream}>{this.state.stream ? 'Stop' : 'Start'}</button>
                     </div>
                     <div className='col-xs-4'>
-                        <button type="button" style={btnStyle} onClick={this.changeCamera}>'Change camera'</button>
+                        <button type="button" style={btnStyle} onClick={this.changeCamera}>Change camera</button>
                     </div>
                 </div>
             </div>
