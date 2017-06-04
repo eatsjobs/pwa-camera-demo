@@ -1,5 +1,5 @@
 var LOG_TAG = '[ServiceWorker]';
-var versionCache = 'v4';
+var versionCache = 'v5';
 var cacheName = 'camera-app-cache-' + versionCache;
 var toCache = ['index.html', 'bundle.js', 'manifest.json', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'];
 

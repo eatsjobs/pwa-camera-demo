@@ -63,6 +63,7 @@ var devConfiguration = {
     extensions: ['.js', '.es6', '.jsx'],
   },
   devServer:{
+    //host:"0.0.0.0",
     open: true,
     inline: true,
     https: false,
