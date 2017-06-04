@@ -1,0 +1,33 @@
+.container {
+    position: relative;
+    width:100%;
+}
+
+.controlsContainer {
+    position: absolute;
+    right: 1%;
+    top:50%;
+    transform: translateY(-50%);
+}
+
+.controlsContainer {
+    font-size: x-large;
+    margin:0;
+    padding:0;
+    min-width: 5%; 
+}
+
+.controlItem {
+    list-style: none;
+    padding: 10%;
+    margin-bottom: 3%;
+    width: 100%;
+    color: white;
+    background: black;
+    background: rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.videoElement {
+    width:100%;
+}

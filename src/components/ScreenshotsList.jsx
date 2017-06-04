@@ -26,14 +26,12 @@ export class ScreenshotsList extends Component {
 
     render() {
         const computedStyle = this.calculateLength(thumbContainer);
-        return (
-            <div className='row'>
-                <ul style={style}>
-                    <div style={computedStyle}>
-                        {this.props.data.map((src) => <ScreenshotItem key={src.toString().length} src={src}/>)}
-                    </div>                
-                </ul>
-            </div>
+        return (            
+            <ul style={style}>
+                <div style={computedStyle}>
+                    {this.props.data.map((src) => <ScreenshotItem key={src.toString().length} src={src}/>)}
+                </div>                
+            </ul>
         )
     }
 }

@@ -1,0 +1,28 @@
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background: black;
+}
+
+
+.container:-moz-full-screen {
+    background: red;
+    max-width: 100%;
+}
+
+.container:-webkit-full-screen {
+    background: red;
+    max-width: 100%;
+}
+
+.container:-ms-fullscreen {
+    background: red;
+    width: 100%; /* needed to center contents in IE */
+    max-width: 100%;
+}
+
+.container:fullscreen {
+    max-width: 100%;
+    background: red;
+}

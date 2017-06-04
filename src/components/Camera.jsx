@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import style from './cameraStyle.css';
 
 export class Camera extends Component {
 
@@ -10,8 +11,11 @@ export class Camera extends Component {
         this.stopStream = this.stopStream.bind(this);
         this.startStream = this.startStream.bind(this);
         this.toggleStream = this.toggleStream.bind(this);
-        this.changeCamera= this.changeCamera.bind(this);
+        this.changeCamera = this.changeCamera.bind(this);
+        this.handleFullScreen = this.handleFullScreen.bind(this);
+        this.onFullScreenChange = this.onFullScreenChange.bind(this);
         this.state = {
+            isFullScreen: false,
             constraints: { 
                 audio: false, 
                 video: {
@@ -61,11 +65,13 @@ export class Camera extends Component {
     }
 
     startStream() {
-        navigator.mediaDevices.getUserMedia(this.props.constraints || this.state.constraints)
-        .then(this.handleStream).catch(this.handleError);
+        return navigator.mediaDevices.getUserMedia(this.state.constraints)
+        .then(this.handleStream)
+        .catch(this.handleError);
     }
 
     componentDidMount() {
+        document.addEventListener('fullscreenchange', this.onFullScreenChange);
         if(this.props.autoStart) {
             this.startStream();
         }
@@ -73,6 +79,7 @@ export class Camera extends Component {
 
     componentWillUnmount() {
         this.stopStream();
+        document.removeEventListener('fullscreenchange', this.onFullScreenChange);
     }
     
     changeCamera() {
@@ -99,26 +106,37 @@ export class Camera extends Component {
         /**/
     }
 
-    render(){
-        const btnStyle = { width: '100%', minHeight:'50px'}
+    handleFullScreen(e) {
+        
+        try {
+            if(!this.state.isFullScreen) {
+                this.refs.container.requestFullscreen();
+                screen.orientation.lock('landscape');
+            } else {
+                //this.refs.container.exitFullscreen();
+                document.exitFullscreen();
+                screen.orientation.unlock();
+            }
+        } catch(e) {
+            console.warn("cannot go fullscreen", e);
+        }
+        
+    }
+
+    onFullScreenChange(e) {
+        this.setState({...this.state, isFullScreen: !!document.fullscreenElement });
+    }
+
+    render() {
+        const fullClasses = ['glyphicon'];
+        this.state.isFullScreen ? fullClasses.push('glyphicon-resize-small') : fullClasses.push('glyphicon-resize-full');
         return (
-            <div className='row'>
-                <div className='row'>
-                    <div className='col-xs-12'>
-                        <video ref="videoElement" style={{width: '100%'}} onClick={this.takePhoto} src={this.state.objUrl}></video>
-                    </div>
-                </div>
-                <div className='row'>
-                    <div className='col-xs-4'>
-                        <button type="button" style={btnStyle} onClick={this.takePhoto}>Take Screenshot</button>
-                    </div>
-                    <div className='col-xs-4'>
-                        <button type="button" style={btnStyle} onClick={this.toggleStream}>{this.state.stream ? 'Stop' : 'Start'}</button>
-                    </div>
-                    <div className='col-xs-4'>
-                        <button type="button" style={btnStyle} onClick={this.changeCamera}>Change camera</button>
-                    </div>
-                </div>
+            <div ref='container' className={style.container}>
+                <video ref="videoElement" className={style.videoElement} onClick={this.takePhoto} src={this.state.objUrl}></video>
+                <ul className={style.controlsContainer}>
+                    <li className={style.controlItem} onClick={this.handleFullScreen}><i className={fullClasses.join(' ')}></i></li>
+                    <li className={style.controlItem} onClick={this.changeCamera}><i className='glyphicon glyphicon-camera'></i></li>
+                </ul>
             </div>
         )
     }

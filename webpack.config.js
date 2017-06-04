@@ -21,7 +21,15 @@ var devConfiguration = {
           test: /\.css$/,
           exclude: /(bower_components|node_modules)/,
           use:[
-            { loader: 'style-loader' }
+            { loader: 'style-loader' },
+            { 
+              loader: 'css-loader', 
+              options: { 
+                modules: true,
+                importLoaders: 1,
+                localIdentName: '[name]_[local]_[hash:base64:5]',
+              }
+            }
           ]
         },
         {
@@ -42,7 +50,7 @@ var devConfiguration = {
       short_name: "Camera H5",
         icon: {
           src: path.resolve('src/images/icons/icon-512x512.png'),
-          sizes: [192, 512]
+          sizes: [512, 192]
       },
       start_url: "index.html",
       display: "standalone",
